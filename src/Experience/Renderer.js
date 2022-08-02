@@ -19,7 +19,7 @@ export default class Renderer
     {
         this.instance = new THREE.WebGLRenderer({
             canvas: this.canvas,
-            antialias: true
+            antialias: true,
         })
         this.instance.physicallyCorrectLights = true
         this.instance.outputEncoding = THREE.sRGBEncoding
@@ -39,6 +39,6 @@ export default class Renderer
 
     update()
     {
-        this.instance.render(this.scene, this.camera.instance)
+        this.instance.render(this.scene, this.camera.perspectiveCamera)
     }
 }

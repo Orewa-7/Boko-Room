@@ -8,7 +8,6 @@ import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 import sources from './sources.js'
-import LoadingBar from './Utils/LoadingBar.js'
 
 let instance = null
 export default class Experience
@@ -33,8 +32,7 @@ export default class Experience
         this.sizes = new Sizes()
         this.time = new Time()
         this.scene = new THREE.Scene()
-        this.loadingBar = new LoadingBar()
-        this.resources = new Resources(sources, this.loadingBar)
+        this.resources = new Resources(sources)
         this.camera = new Camera()
         this.renderer = new Renderer()
         this.world = new World()
