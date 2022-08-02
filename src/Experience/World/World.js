@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import Room from './Room.js'
 import Environment from './Environment.js'
+import Controls from './Controls.js'
 
 export default class World
 {
@@ -16,12 +17,21 @@ export default class World
         {
             this.environment = new Environment()
             this.room = new Room()
+            this.controls = new Controls()
         })
         
     }
 
+    reseize(){}
+
     update()
     {
-        
+        if(this.room){
+            this.room.update()
+        }
+
+        if(this.controls){
+            this.controls.update()
+        }
     }
 }
