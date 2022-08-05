@@ -58,10 +58,10 @@ export default class Controls
         window.addEventListener('wheel', event =>{
             if(event.deltaY > 0){
                 this.lerp.target += 0.01
-                this.back = false
+                // this.back = false
             } else {
                 this.lerp.target -= 0.01
-                this.back = true
+                // this.back = true
             }
         })
     }
@@ -77,7 +77,8 @@ export default class Controls
         )
 
 
-        this.curve.getPoint(this.lerp.current % 1, this.position)
+        this.curve.getPointAt(this.lerp.current % 1, this.position)
+
         this.camera.orthographicCamera.position.copy(this.position)
 
         this.directionalVector.subVectors(
@@ -89,7 +90,7 @@ export default class Controls
 
         this.crossVector.crossVectors(this.directionalVector, this.staticVector)
 
-        this.crossVector.multiplyScalar(10000)
+        this.crossVector.multiplyScalar(100)
 
         this.camera.orthographicCamera.lookAt(this.crossVector)
 
