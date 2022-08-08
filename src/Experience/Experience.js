@@ -4,6 +4,7 @@ import Debug from './Utils/Debug.js'
 import Sizes from "./Utils/Sizes.js"
 import Time from "./Utils/Time.js"
 import Camera from './Camera.js'
+import Theme from './Theme.js'
 import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
@@ -35,6 +36,7 @@ export default class Experience
         this.resources = new Resources(sources)
         this.camera = new Camera()
         this.renderer = new Renderer()
+        this.theme = new Theme()
         this.world = new World()
 
         // Resize event

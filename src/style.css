@@ -32,6 +32,7 @@ html, body{
 }
 
 /* Page Itself -------------------------------------------- */
+
 .page{
     z-index: 9999;
     width: 100%;
@@ -43,8 +44,62 @@ html, body{
     position: relative;
 }
 
+/* Toggle Bar -------------------------------------------- */
+.toggle-bar{
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    top: 48px;
+    right: 48px;
+    z-index: 99999;
+}
+
+.moon-wrapper, .sun-wrapper{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.toggle-button{
+    cursor: pointer;
+    position: relative;
+    width: 56px;
+    height: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary-pink);
+    border-radius: 999px;
+    margin: 0 16px;
+    border: none;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+}
+
+.toggle-circle{
+    position: absolute;
+    left: 6px;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background-color: var(--primary-color);
+    transition: all 0.2s ease-in-out;
+}
+
+.toggle-button:hover .toggle-circle{
+    transform: scale(0.9);
+}
+
+.slide{
+    left: 28px;
+}
+
+
 /* Section formating --------------------------------------- */
-.section-marging{
+
+.section-margin{
     height: 3000px;
     width: 100%;
 }
@@ -169,7 +224,7 @@ html, body{
 }
 
 .hero-main-title{
-    font-size: 64px;
+    font-size: 48px;
 }
 
 .hero-main-description{

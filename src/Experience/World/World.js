@@ -10,8 +10,8 @@ export default class World
     {
         this.experience = new Experience()
         this.scene = this.experience.scene
-    
         this.resources = this.experience.resources
+        this.theme = this.experience.theme
 
         // Wait for resources
         this.resources.on('ready', () =>
@@ -22,6 +22,15 @@ export default class World
             this.floor = new Floor()
         })
         
+        this.theme.on('switch', theme =>{
+            this.switchTheme(theme)
+        })
+        
+    }
+    switchTheme(theme){
+        if(this.environment){
+            this.environment.switchTheme(theme)
+        }
     }
 
     reseize(){}
