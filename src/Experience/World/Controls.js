@@ -1,13 +1,13 @@
 import * as THREE from 'three'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger.js'
+import ASScroll from '@ashthornton/asscroll'
+
 
 import Experience from '../Experience.js'
 
-export default class Controls
-{
-    constructor()
-    {
+export default class Controls {
+    constructor() {
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
@@ -16,17 +16,67 @@ export default class Controls
         this.time = this.experience.time
         this.room = this.experience.world.room.actualRoom
         this.room.children.forEach(child => {
-            if(child.type === "RectAreaLight"){
+            if (child.type === "RectAreaLight") {
                 this.rectLight = child
             }
         })
         gsap.registerPlugin(ScrollTrigger)
 
+        this.setSmoothScroll()
         this.scrollTrigger()
 
     }
 
-    scrollTrigger(){
+    setupASScroll() {
+        // https://github.com/ashthornton/asscroll
+        const asscroll = new ASScroll({
+            ease: 0.1,
+            disableRaf: true
+        });
+
+
+        gsap.ticker.add(asscroll.update);
+
+        ScrollTrigger.defaults({
+            scroller: asscroll.containerElement
+        });
+
+
+        ScrollTrigger.scrollerProxy(asscroll.containerElement, {
+            scrollTop(value) {
+                if (arguments.length) {
+                    asscroll.currentPos = value;
+                    return;
+                }
+                return asscroll.currentPos;
+            },
+            getBoundingClientRect() {
+                return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+            },
+            fixedMarkers: true
+        });
+
+
+        asscroll.on("update", ScrollTrigger.update);
+        ScrollTrigger.addEventListener("refresh", asscroll.resize);
+
+        requestAnimationFrame(() => {
+            asscroll.enable({
+                newScrollElements: document.querySelectorAll(".gsap-marker-start, .gsap-marker-end, [asscroll]")
+            });
+
+        });
+        return asscroll;
+    }
+
+    setSmoothScroll() {
+        this.asscroll = this.setupASScroll()
+
+    }
+
+
+
+    scrollTrigger() {
         // this.timeline = new gsap.timeline()
         // this.timeline.to(this.room.position,{
         //     x: () => {
@@ -43,19 +93,19 @@ export default class Controls
         // })
 
         ScrollTrigger.matchMedia({
-            
-	
+
+
             // Desktop
             "(min-width: 969px)": () => {
 
-                this.room.scale.set(0.11,0.11,0.11)
+                this.room.scale.set(0.11, 0.11, 0.11)
 
-                this.rectLight.width = 0.2               
+                this.rectLight.width = 0.2
                 this.rectLight.height = 0.55
 
                 // First Section ------------------------------------------
                 this.firstMoveTimeline = new gsap.timeline({
-                    scrollTrigger:{
+                    scrollTrigger: {
                         trigger: '.first-move',
                         start: 'top top',
                         end: 'bottom bottom',
@@ -64,14 +114,14 @@ export default class Controls
                     }
                 })
                 this.firstMoveTimeline.to(this.room.position, {
-                    x: () =>{
+                    x: () => {
                         return this.sizes.width * 0.00098
                     }
                 })
 
                 // Second Section  -----------------------------------------
                 this.secondMoveTimeline = new gsap.timeline({
-                    scrollTrigger:{
+                    scrollTrigger: {
                         trigger: '.second-move',
                         start: 'top top',
                         end: 'bottom bottom',
@@ -80,10 +130,10 @@ export default class Controls
                     }
                 })
                 this.secondMoveTimeline.to(this.room.position, {
-                    x: () =>{
+                    x: () => {
                         return 0
                     },
-                    z: () =>{
+                    z: () => {
                         return this.sizes.height * 0.00098
                     }
                 }, 'same')
@@ -99,7 +149,7 @@ export default class Controls
 
                 // Third Section ------------------------------------------
                 this.thirdMoveTimeline = new gsap.timeline({
-                    scrollTrigger:{
+                    scrollTrigger: {
                         trigger: '.third-move',
                         start: 'top top',
                         end: 'bottom bottom',
@@ -117,14 +167,14 @@ export default class Controls
             // Mobile 
             "(max-width: 968px)": () => {
 
-                this.room.scale.set(0.07,0.07,0.07)
-                this.room.position.set(0,0,0)
-                this.rectLight.width *= 0.7                
+                this.room.scale.set(0.07, 0.07, 0.07)
+                this.room.position.set(0, 0, 0)
+                this.rectLight.width *= 0.7
                 this.rectLight.height *= 0.7
 
                 // First Section ------------------------------------------
                 this.firstMoveTimeline = new gsap.timeline({
-                    scrollTrigger:{
+                    scrollTrigger: {
                         trigger: '.first-move',
                         start: 'top top',
                         end: 'bottom bottom',
@@ -138,7 +188,7 @@ export default class Controls
                 })
                 // Second Section  -----------------------------------------
                 this.secondMoveTimeline = new gsap.timeline({
-                    scrollTrigger:{
+                    scrollTrigger: {
                         trigger: '.second-move',
                         start: 'top top',
                         end: 'bottom bottom',
@@ -151,14 +201,14 @@ export default class Controls
                     z: 0.3,
                 }, 'same').to(this.rectLight, {
                     width: this.rectLight.width * 3.4,
-                    height: this.rectLight.height * 3.4 
+                    height: this.rectLight.height * 3.4
                 }, 'same').to(this.room.position, {
                     x: 1.25,
                 }, 'same')
 
                 // Third Section ------------------------------------------
                 this.thirdMoveTimeline = new gsap.timeline({
-                    scrollTrigger:{
+                    scrollTrigger: {
                         trigger: '.third-move',
                         start: 'top top',
                         end: 'bottom bottom',
@@ -170,19 +220,19 @@ export default class Controls
                     z: -3
                 })
             },
-              
+
             // all 
             "all": () => {
 
                 this.sections = document.querySelectorAll('.section')
-                this.sections.forEach((section)=>{
+                this.sections.forEach((section) => {
                     this.progressWrapper = section.querySelector('.progress-wrapper')
                     this.progressBar = section.querySelector('.progress-bar')
 
-                    if(section.classList.contains("right")){
+                    if (section.classList.contains("right")) {
                         gsap.to(section, {
                             borderTopLeftRadius: 10,
-                            scrollTrigger:{
+                            scrollTrigger: {
                                 trigger: section,
                                 start: 'top bottom',
                                 end: 'top top',
@@ -191,7 +241,7 @@ export default class Controls
                         })
                         gsap.to(section, {
                             borderBottomLeftRadius: 700,
-                            scrollTrigger:{
+                            scrollTrigger: {
                                 trigger: section,
                                 start: 'bottom bottom',
                                 end: 'bottom top',
@@ -201,7 +251,7 @@ export default class Controls
                     } else {
                         gsap.to(section, {
                             borderTopRightRadius: 10,
-                            scrollTrigger:{
+                            scrollTrigger: {
                                 trigger: section,
                                 start: 'top bottom',
                                 end: 'top top',
@@ -210,7 +260,7 @@ export default class Controls
                         })
                         gsap.to(section, {
                             borderBottomRightRadius: 700,
-                            scrollTrigger:{
+                            scrollTrigger: {
                                 trigger: section,
                                 start: 'bottom bottom',
                                 end: 'bottom top',
@@ -220,35 +270,35 @@ export default class Controls
                     }
                     gsap.from(this.progressBar, {
                         scaleY: 0,
-                        scrollTrigger:{
+                        scrollTrigger: {
                             trigger: section,
                             start: 'top top',
                             end: 'bottom bottom',
-                            scrub: 0.4, 
+                            scrub: 0.4,
                             pin: this.progressWrapper,
                             pinSpacing: false
                         }
                     })
                 })
-                
+
                 // Mini Plateform
                 this.secondPartTimeline = new gsap.timeline({
-                    scrollTrigger:{
+                    scrollTrigger: {
                         trigger: '.third-move',
                         start: 'center center',
                     }
                 })
 
-                this.room.children.forEach(child =>{
-                    if(child.name === "Mini_Floor"){
+                this.room.children.forEach(child => {
+                    if (child.name === "Mini_Floor") {
                         this.first = gsap.to(child.position, {
                             x: -1.45369,
-                            z: 6.73947, 
+                            z: 6.73947,
                             ease: "back.out(2)",
                             duration: 0.3
                         })
                     }
-                    if(child.name === "Mailbox"){
+                    if (child.name === "Mailbox") {
                         this.second = gsap.to(child.scale, {
                             x: 1,
                             y: 1,
@@ -257,7 +307,7 @@ export default class Controls
                             duration: 0.3
                         })
                     }
-                    if(child.name === "Lamp"){
+                    if (child.name === "Lamp") {
                         this.third = gsap.to(child.scale, {
                             x: 1,
                             y: 1,
@@ -266,7 +316,7 @@ export default class Controls
                             duration: 0.3
                         })
                     }
-                    if(child.name === "FlowerOne"){
+                    if (child.name === "FlowerOne") {
                         this.fourth = gsap.to(child.scale, {
                             x: 1,
                             y: 1,
@@ -275,7 +325,7 @@ export default class Controls
                             duration: 0.3
                         })
                     }
-                    if(child.name === "FlowerTwo"){
+                    if (child.name === "FlowerTwo") {
                         this.fifth = gsap.to(child.scale, {
                             x: 1,
                             y: 1,
@@ -284,7 +334,7 @@ export default class Controls
                             duration: 0.3
                         })
                     }
-                    if(child.name === "FloorFirst"){
+                    if (child.name === "FloorFirst") {
                         this.sixth = gsap.to(child.scale, {
                             x: 1,
                             y: 1,
@@ -293,7 +343,7 @@ export default class Controls
                             duration: 0.3
                         })
                     }
-                    if(child.name === "FloorSecond"){
+                    if (child.name === "FloorSecond") {
                         this.seventh = gsap.to(child.scale, {
                             x: 1,
                             y: 1,
@@ -302,7 +352,7 @@ export default class Controls
                             duration: 0.3
                         })
                     }
-                    if(child.name === "FloorThird"){
+                    if (child.name === "FloorThird") {
                         this.eighth = gsap.to(child.scale, {
                             x: 1,
                             y: 1,
@@ -311,7 +361,7 @@ export default class Controls
                             duration: 0.3
                         })
                     }
-                    if(child.name === "Dirt"){
+                    if (child.name === "Dirt") {
                         this.ninth = gsap.to(child.scale, {
                             x: 1,
                             y: 1,
@@ -324,7 +374,7 @@ export default class Controls
                 this.secondPartTimeline.add(this.first)
                 this.secondPartTimeline.add(this.second, '-=0.2')
                 this.secondPartTimeline.add(this.third, '-=0.2')
-                
+
                 this.secondPartTimeline.add(this.ninth, '-=0.2')
                 this.secondPartTimeline.add(this.fourth, '-=0.2')
                 this.secondPartTimeline.add(this.fifth, '-=0.2')
@@ -334,15 +384,14 @@ export default class Controls
 
 
             }
-              
-          }); 
+
+        });
     }
 
-    reseize(){}
+    reseize() { }
 
-    update()
-    {
-        
+    update() {
+
 
     }
 }
