@@ -50,6 +50,22 @@ export default class Room {
                 child.children[1].material = new THREE.MeshBasicMaterial()
                 child.children[1].material.map = this.resources.items.OnePiece
             }
+            if (child.name === "Mini_Floor") {
+                child.position.x = 1.39599 
+                child.position.z = 3.88979
+            }
+            if (child.name === "Mailbox" || 
+                child.name === "Lamp" || 
+                child.name === "FlowerOne" || 
+                child.name === "FlowerTwo" || 
+                child.name === "FloorFirst" || 
+                child.name === "FloorSecond" || 
+                child.name === "FloorThird" || 
+                child.name === "Dirt") {
+
+                child.scale.set(0,0,0)
+                 
+            }
         })
 
         const width = 0.2;
