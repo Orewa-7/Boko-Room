@@ -173,15 +173,69 @@ export default class Controls
               
             // all 
             "all": () => {
-                // Mini Plateform
 
+                this.sections = document.querySelectorAll('.section')
+                this.sections.forEach((section)=>{
+                    this.progressWrapper = section.querySelector('.progress-wrapper')
+                    this.progressBar = section.querySelector('.progress-bar')
+
+                    if(section.classList.contains("right")){
+                        gsap.to(section, {
+                            borderTopLeftRadius: 10,
+                            scrollTrigger:{
+                                trigger: section,
+                                start: 'top bottom',
+                                end: 'top top',
+                                scrub: 0.6,
+                            }
+                        })
+                        gsap.to(section, {
+                            borderBottomLeftRadius: 700,
+                            scrollTrigger:{
+                                trigger: section,
+                                start: 'bottom bottom',
+                                end: 'bottom top',
+                                scrub: 0.6,
+                            }
+                        })
+                    } else {
+                        gsap.to(section, {
+                            borderTopRightRadius: 10,
+                            scrollTrigger:{
+                                trigger: section,
+                                start: 'top bottom',
+                                end: 'top top',
+                                scrub: 0.6,
+                            }
+                        })
+                        gsap.to(section, {
+                            borderBottomRightRadius: 700,
+                            scrollTrigger:{
+                                trigger: section,
+                                start: 'bottom bottom',
+                                end: 'bottom top',
+                                scrub: 0.6,
+                            }
+                        })
+                    }
+                    gsap.from(this.progressBar, {
+                        scaleY: 0,
+                        scrollTrigger:{
+                            trigger: section,
+                            start: 'top top',
+                            end: 'bottom bottom',
+                            scrub: 0.4, 
+                            pin: this.progressWrapper,
+                            pinSpacing: false
+                        }
+                    })
+                })
+                
+                // Mini Plateform
                 this.secondPartTimeline = new gsap.timeline({
                     scrollTrigger:{
                         trigger: '.third-move',
                         start: 'center center',
-                        end: 'bottom bottom',
-                        scrub: 0.6,
-                        invalidateOnRefresh: true
                     }
                 })
 
@@ -189,7 +243,8 @@ export default class Controls
                     if(child.name === "Mini_Floor"){
                         this.first = gsap.to(child.position, {
                             x: -1.45369,
-                            z: 6.73947,
+                            z: 6.73947, 
+                            ease: "back.out(2)",
                             duration: 0.3
                         })
                     }
@@ -198,6 +253,7 @@ export default class Controls
                             x: 1,
                             y: 1,
                             z: 1,
+                            ease: "back.out(2)",
                             duration: 0.3
                         })
                     }
@@ -206,6 +262,7 @@ export default class Controls
                             x: 1,
                             y: 1,
                             z: 1,
+                            ease: "back.out(2)",
                             duration: 0.3
                         })
                     }
@@ -214,6 +271,7 @@ export default class Controls
                             x: 1,
                             y: 1,
                             z: 1,
+                            ease: "back.out(2)",
                             duration: 0.3
                         })
                     }
@@ -222,6 +280,7 @@ export default class Controls
                             x: 1,
                             y: 1,
                             z: 1,
+                            ease: "back.out(2)",
                             duration: 0.3
                         })
                     }
@@ -230,6 +289,7 @@ export default class Controls
                             x: 1,
                             y: 1,
                             z: 1,
+                            ease: "back.out(2)",
                             duration: 0.3
                         })
                     }
@@ -238,6 +298,7 @@ export default class Controls
                             x: 1,
                             y: 1,
                             z: 1,
+                            ease: "back.out(2)",
                             duration: 0.3
                         })
                     }
@@ -246,6 +307,7 @@ export default class Controls
                             x: 1,
                             y: 1,
                             z: 1,
+                            ease: "back.out(2)",
                             duration: 0.3
                         })
                     }
@@ -254,19 +316,21 @@ export default class Controls
                             x: 1,
                             y: 1,
                             z: 1,
+                            ease: "back.out(2)",
                             duration: 0.3
                         })
                     }
                 })
                 this.secondPartTimeline.add(this.first)
-                this.secondPartTimeline.add(this.second)
-                this.secondPartTimeline.add(this.third)
-                this.secondPartTimeline.add(this.fourth)
-                this.secondPartTimeline.add(this.fifth)
-                this.secondPartTimeline.add(this.sixth)
+                this.secondPartTimeline.add(this.second, '-=0.2')
+                this.secondPartTimeline.add(this.third, '-=0.2')
+                
+                this.secondPartTimeline.add(this.ninth, '-=0.2')
+                this.secondPartTimeline.add(this.fourth, '-=0.2')
+                this.secondPartTimeline.add(this.fifth, '-=0.2')
+                this.secondPartTimeline.add(this.sixth, '-=0.2')
                 this.secondPartTimeline.add(this.seventh)
-                this.secondPartTimeline.add(this.eighth)
-                this.secondPartTimeline.add(this.ninth)
+                this.secondPartTimeline.add(this.eighth, '-=0.1')
 
 
             }
