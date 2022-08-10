@@ -74,8 +74,7 @@ export default class Controls {
     }
 
     setSmoothScroll() {
-        this.asscroll = this.setupASScroll()
-
+        // this.asscroll = this.setupASScroll()
     }
 
 

@@ -3,11 +3,14 @@ import Room from './Room.js'
 import Environment from './Environment.js'
 import Controls from './Controls.js'
 import Floor from './Floor.js'
+import EventEmitter from '../Utils/EventEmitter.js'
 
-export default class World
+
+export default class World extends EventEmitter
 {
     constructor()
     {
+        super()
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.resources = this.experience.resources
@@ -20,6 +23,7 @@ export default class World
             this.floor = new Floor()
             this.room = new Room()
             this.controls = new Controls()
+            this.trigger('worldready')
         })
         
         this.theme.on('switch', theme =>{

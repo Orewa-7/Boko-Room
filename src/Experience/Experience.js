@@ -9,6 +9,7 @@ import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 import sources from './sources.js'
+import Preloader from './Preloader.js'
 
 let instance = null
 export default class Experience
@@ -38,6 +39,7 @@ export default class Experience
         this.renderer = new Renderer()
         this.theme = new Theme()
         this.world = new World()
+        this.preloader = new Preloader()
 
         // Resize event
         this.sizes.on('resize', () =>

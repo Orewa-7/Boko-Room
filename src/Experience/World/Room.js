@@ -12,6 +12,7 @@ export default class Room {
         this.time = this.experience.time
         this.room = this.resources.items.RoomModel
         this.actualRoom = this.room.scene
+        this.roomChildern = {}
 
         this.lerp = {
             current: 0,
@@ -54,18 +55,28 @@ export default class Room {
                 child.position.x = 1.39599 
                 child.position.z = 3.88979
             }
-            if (child.name === "Mailbox" || 
-                child.name === "Lamp" || 
-                child.name === "FlowerOne" || 
-                child.name === "FlowerTwo" || 
-                child.name === "FloorFirst" || 
-                child.name === "FloorSecond" || 
-                child.name === "FloorThird" || 
-                child.name === "Dirt") {
+            // if (child.name === "Mailbox" || 
+            //     child.name === "Lamp" || 
+            //     child.name === "FlowerOne" || 
+            //     child.name === "FlowerTwo" || 
+            //     child.name === "FloorFirst" || 
+            //     child.name === "FloorSecond" || 
+            //     child.name === "FloorThird" || 
+            //     child.name === "Dirt") {
 
-                child.scale.set(0,0,0)
-                 
+            //     child.scale.set(0,0,0)
+            // }
+            
+            child.scale.set(0,0,0)
+
+            if (child.name === "Cube"){
+                // child.scale.set(1,1,1)
+                child.position.set(0, 0.3, 0)
+                child.rotation.y = Math.PI * 0.25
             }
+
+            this.roomChildern[child.name.toLowerCase()] = child
+
         })
 
         const width = 0.2;
@@ -76,6 +87,9 @@ export default class Room {
         rectLight.rotation.x = - Math.PI * 0.5
         rectLight.rotation.z = Math.PI * 0.25
         this.actualRoom.add(rectLight)
+
+        this.roomChildern['rectLight'] = rectLight
+
 
         // const rectLightHelper = new RectAreaLightHelper(rectLight);
         // rectLight.add(rectLightHelper);
