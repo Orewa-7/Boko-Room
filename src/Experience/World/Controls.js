@@ -20,11 +20,15 @@ export default class Controls {
                 this.rectLight = child
             }
         })
+
+        this.circleFirst = this.experience.world.floor.circleFirst
+        this.circleSecond = this.experience.world.floor.circleSecond
+        this.circleThird = this.experience.world.floor.circleThird
+
         gsap.registerPlugin(ScrollTrigger)
 
         this.setSmoothScroll()
         this.scrollTrigger()
-
     }
 
     setupASScroll() {
@@ -224,6 +228,7 @@ export default class Controls {
             // all 
             "all": () => {
 
+                // Progress Bar
                 this.sections = document.querySelectorAll('.section')
                 this.sections.forEach((section) => {
                     this.progressWrapper = section.querySelector('.progress-wrapper')
@@ -280,6 +285,55 @@ export default class Controls {
                         }
                     })
                 })
+
+                // All Animation --------
+                // First Section ------------------------------------------
+                this.firstMoveTimeline = new gsap.timeline({
+                    scrollTrigger: {
+                        trigger: '.first-move',
+                        start: 'top top',
+                        end: 'bottom bottom',
+                        scrub: 0.6,
+                        invalidateOnRefresh: true
+                    }
+                }).to(this.circleFirst.scale, {
+                    x: 3,
+                    y: 3,
+                    z: 3
+                })
+
+                // Second Section  -----------------------------------------
+                this.secondMoveTimeline = new gsap.timeline({
+                    scrollTrigger: {
+                        trigger: '.second-move',
+                        start: 'top top',
+                        end: 'bottom bottom',
+                        scrub: 0.6,
+                        invalidateOnRefresh: true
+                    }
+                }).to(this.circleSecond.scale, {
+                    x: 3,
+                    y: 3,
+                    z: 3
+                }, 'same').to(this.room.position, {
+                    y: 0.15
+                }, 'same')
+
+                // Third Section ------------------------------------------
+                this.thirdMoveTimeline = new gsap.timeline({
+                    scrollTrigger: {
+                        trigger: '.third-move',
+                        start: 'top top',
+                        end: 'bottom bottom',
+                        scrub: 0.6,
+                        invalidateOnRefresh: true
+                    }
+                }).to(this.circleThird.scale, {
+                    x: 3,
+                    y: 3,
+                    z: 3
+                })
+
 
                 // Mini Plateform
                 this.secondPartTimeline = new gsap.timeline({
