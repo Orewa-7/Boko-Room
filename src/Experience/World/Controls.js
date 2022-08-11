@@ -20,12 +20,15 @@ export default class Controls {
                 this.rectLight = child
             }
         })
+        
 
         this.circleFirst = this.experience.world.floor.circleFirst
         this.circleSecond = this.experience.world.floor.circleSecond
         this.circleThird = this.experience.world.floor.circleThird
 
         gsap.registerPlugin(ScrollTrigger)
+
+        document.querySelector('.page').style.overflow = 'visible'
 
         this.setSmoothScroll()
         this.scrollTrigger()
@@ -74,7 +77,7 @@ export default class Controls {
     }
 
     setSmoothScroll() {
-        // this.asscroll = this.setupASScroll()
+        this.asscroll = this.setupASScroll()
     }
 
 

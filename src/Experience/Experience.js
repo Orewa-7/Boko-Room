@@ -10,6 +10,7 @@ import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 import sources from './sources.js'
 import Preloader from './Preloader.js'
+import Controls from './World/Controls.js'
 
 let instance = null
 export default class Experience
@@ -41,6 +42,11 @@ export default class Experience
         this.world = new World()
         this.preloader = new Preloader()
 
+        this.preloader.on('enablecontrols', ()=>{
+            console.log('controls')
+            this.controls = new Controls()
+        })
+
         // Resize event
         this.sizes.on('resize', () =>
         {
@@ -65,5 +71,8 @@ export default class Experience
         this.camera.update()
         this.world.update()
         this.renderer.update()
+        if(this.controls){
+            this.controls.update()
+        }
     }
 }
