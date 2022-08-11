@@ -41,9 +41,18 @@ export default class Preloader extends EventEmitter {
     }
 
     firstIntro() {
-        this.timeline = new gsap.timeline()
+        
 
         return new Promise((resolve) => {
+            this.timeline = new gsap.timeline()
+            this.timeline.to('.preLoader', {
+                delay: 1,
+                opacity: 0,
+                onComplete: ()=>{
+                    document.querySelector('.preLoader').classList.add('hidden')
+                }
+            })
+
             if (this.device === 'desktop') {
                 this.timeline.to(this.roomChildren.cube.scale, {
                     x: 1,
