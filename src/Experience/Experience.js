@@ -74,5 +74,8 @@ export default class Experience
         if(this.controls){
             this.controls.update()
         }
+        if(this.preloader){
+            this.preloader.update()
+        }
     }
 }
