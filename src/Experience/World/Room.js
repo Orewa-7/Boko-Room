@@ -55,6 +55,8 @@ export default class Room {
             if (child.name === "Computer") {
                 child.children[1].material = new THREE.MeshBasicMaterial()
                 child.children[1].material.map = this.resources.items.OnePiece
+                child.children[1].rotation.y += Math.PI  
+                child.children[1].material.side = THREE.BackSide
             }
             if (child.name === "Mini_Floor") {
                 child.position.x = 1.39599 

@@ -188,6 +188,13 @@ export default class Preloader extends EventEmitter {
                     ease: "back.out(2.2)",
                     duration: 0.5
                 }, ">-0.3")
+                .to(this.roomChildren.fish.scale, {
+                    x: 1,
+                    y: 1,
+                    z: 1,
+                    ease: "back.out(2.2)",
+                    duration: 0.5
+                }, ">-0.3")
                 .to(this.roomChildren.floor_items.scale, {
                     x: 1,
                     y: 1,
@@ -232,7 +239,7 @@ export default class Preloader extends EventEmitter {
                     duration: 0.5
                 }, 'chair', ">-0.2")
                 .to(this.roomChildren.chair.rotation, {
-                    y: 4 * Math.PI + Math.PI * 0.25,
+                    y: 4 * Math.PI - Math.PI * 0.125,
                     ease: "power2.out",
                     duration: 1,
                 }, 'chair', ">-0.2")
