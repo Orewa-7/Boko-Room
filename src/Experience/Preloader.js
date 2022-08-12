@@ -36,7 +36,6 @@ export default class Preloader extends EventEmitter {
         convert(document.querySelector('.second-sub'))
         this.room = this.experience.world.room.actualRoom
         this.roomChildren = this.experience.world.room.roomChildern
-        console.log(this.roomChildren);
 
     }
 
@@ -45,6 +44,10 @@ export default class Preloader extends EventEmitter {
 
         return new Promise((resolve) => {
             this.timeline = new gsap.timeline()
+            this.timeline.set('.animatedis', {
+                y: 0,
+                yPercent: 100
+            })
             this.timeline.to('.preLoader', {
                 delay: 1,
                 opacity: 0,
@@ -81,7 +84,7 @@ export default class Preloader extends EventEmitter {
             }
             this.timeline
             .to('.intro-text .animatedis', {
-                yPercent: -100,
+                yPercent: 0,
                 stagger: 0.05,
                 ease: 'back.out(1.7)',
             })
@@ -97,6 +100,8 @@ export default class Preloader extends EventEmitter {
     }
     secondIntro() {
         return new Promise(resolve => {
+            
+
             this.secondTimeline = new gsap.timeline()
 
             this.secondTimeline
@@ -141,22 +146,22 @@ export default class Preloader extends EventEmitter {
                     z: 0
                 }, 'introtext')
                 .to('.hero-main-title .animatedis', {
-                    yPercent: -100,
+                    yPercent: 0,
                     stagger: 0.07,
                     ease: 'back.out(1.7)',
                 }, 'introtext')
                 .to('.hero-main-description .animatedis', {
-                    yPercent: -100,
+                    yPercent: 0,
                     stagger: 0.07,
                     ease: 'back.out(1.7)',
                 }, 'introtext')
                 .to('.first-sub .animatedis', {
-                    yPercent: -100,
+                    yPercent: 0,
                     stagger: 0.07,
                     ease: 'back.out(1.7)',
                 }, 'introtext')
                 .to('.second-sub .animatedis', {
-                    yPercent: -100,
+                    yPercent: 0,
                     stagger: 0.07,
                     ease: 'back.out(1.7)',
                 }, 'introtext')
@@ -248,7 +253,6 @@ export default class Preloader extends EventEmitter {
 
     onScroll(e) {
         if (e.deltaY > 0) {
-            console.log('added event')
             this.removeEventListeners()
             this.playSecondIntro()
 
@@ -292,7 +296,6 @@ export default class Preloader extends EventEmitter {
         this.scaleFlag = true
         await this.secondIntro()
         this.scaleFlag = false
-        console.log('enable')
 
         this.trigger('enablecontrols')
     }
@@ -307,6 +310,8 @@ export default class Preloader extends EventEmitter {
     }
 
     scale(){
+        this.roomChildren.rectLight.width = 0
+        this.roomChildren.rectLight.height = 0
         if(this.device === "desktop"){
             this.room.scale.set(0.11, 0.11, 0.11)
         } else {
@@ -318,7 +323,8 @@ export default class Preloader extends EventEmitter {
     update(){
         if(this.moveFlag)
             this.move()
-        if(this.scaleFlag)
+        if(this.scaleFlag){
             this.scale()
+        }
     }
 }

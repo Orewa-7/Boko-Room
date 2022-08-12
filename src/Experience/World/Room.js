@@ -9,10 +9,16 @@ export default class Room {
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.resources = this.experience.resources
+        this.sizes = this.experience.sizes
         this.time = this.experience.time
         this.room = this.resources.items.RoomModel
         this.actualRoom = this.room.scene
         this.roomChildern = {}
+
+        this.device = this.sizes.device
+        this.sizes.on('switchdevice', (device) => {
+            this.device = device
+        })
 
         this.lerp = {
             current: 0,
@@ -27,7 +33,6 @@ export default class Room {
     }
 
     setModel() {
-        console.log(this.actualRoom.children)
 
         this.actualRoom.children.forEach((child) => {
             child.castShadow = true
@@ -95,7 +100,12 @@ export default class Room {
         // rectLight.add(rectLightHelper);
 
         this.scene.add(this.actualRoom)
-        this.actualRoom.scale.set(0.11, 0.11, 0.11)
+
+        if(this.device === 'desktop')
+            this.actualRoom.scale.set(0.11, 0.11, 0.11)
+        else 
+            this.actualRoom.scale.set(0.07, 0.07, 0.07)
+
     }
 
     setAnimation() {

@@ -31,11 +31,9 @@ export default class Sizes extends EventEmitter
             if(this.width < 968 && this.device !== 'mobile'){
                 this.device = "mobile"
                 this.trigger('switchdevice', [this.device])
-                console.log('mobile')
             } else if(this.width >= 968 && this.device !== 'desktop') {
                 this.device = "desktop"
                 this.trigger('switchdevice', [this.device])
-                console.log('desktop')
 
             }
         })
