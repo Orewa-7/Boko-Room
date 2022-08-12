@@ -36,6 +36,8 @@ export default class Preloader extends EventEmitter {
         convert(document.querySelector('.second-sub'))
         this.room = this.experience.world.room.actualRoom
         this.roomChildren = this.experience.world.room.roomChildern
+        this.roomChildren.rectLight.width = 0
+        this.roomChildren.rectLight.height = 0
 
     }
 

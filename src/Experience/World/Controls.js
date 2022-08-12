@@ -97,6 +97,8 @@ export default class Controls {
         //         invalidateOnRefresh: true 
         //     }
         // })
+        this.rectLight.width = 0.2
+        this.rectLight.height = 0.55
 
         ScrollTrigger.matchMedia({
 
@@ -106,8 +108,7 @@ export default class Controls {
 
                 this.room.scale.set(0.11, 0.11, 0.11)
 
-                this.rectLight.width = 0.2
-                this.rectLight.height = 0.55
+                
 
                 // First Section ------------------------------------------
                 this.firstMoveTimeline = new gsap.timeline({
